@@ -1,17 +1,17 @@
 // ===== 商品データ =====
 const CATEGORIES = [
   {
-    id: 'siuzku', label: 'sizuku', gridId: 'siuzku-grid', countId: 'siuzku-count',
+    id: 'siuzku', label: '品類A', gridId: 'siuzku-grid', countId: 'siuzku-count',
     lowStockThreshold: 10, perBox: 33,
     items: ['ゆず','リンゴ','オレンジカシス','抹茶','焙じ茶','アールグレイ','テキーラ','xyz','ゴッドマザー','くり','洋梨','マンゴー']
   },
   {
-    id: 'mizumari', label: 'mizumari', gridId: 'mizumari-grid', countId: 'mizumari-count',
+    id: 'mizumari', label: '品類B', gridId: 'mizumari-grid', countId: 'mizumari-count',
     lowStockThreshold: 1, perBox: 25,
     items: ['ゆず','リンゴ','焙じ茶','栗','抹茶','アールグレイ']
   },
   {
-    id: 'tumiki', label: 'tumiki', gridId: 'tumiki-grid', countId: 'tumiki-count',
+    id: 'tumiki', label: '品類C', gridId: 'tumiki-grid', countId: 'tumiki-count',
     lowStockThreshold: 1, perBox: 20,
     items: ['抹茶','焙じ茶','ココア','シナモン','セロリ','ローズマリー','フェンネル','カルダモン']
   }
@@ -20,7 +20,7 @@ const CATEGORIES = [
 // ===== 資材データ（固定）=====
 const SHIZAI_CATEGORIES = [
   {
-    id: 'yamabun', label: '山末さん', colorClass: 'cat-yamabun',
+    id: 'yamabun', label: '仕入先A', colorClass: 'cat-yamabun',
     items: [
       { key: 'sleeve_box',      name: 'スリーブ箱（下箱と蓋セット）', delivery: '3週間', unit: '10,000', defaultNote: '' },
       { key: 'paper_cushion',   name: 'ペーパークッション',           delivery: '4週間', unit: '3,000',  defaultNote: '' },
@@ -37,32 +37,32 @@ const SHIZAI_CATEGORIES = [
     ]
   },
   {
-    id: 'zapack', label: 'ザパック', colorClass: 'cat-zapack',
+    id: 'zapack', label: '仕入先B', colorClass: 'cat-zapack',
     items: [
       { key: 'paper_bag', name: '紙袋', delivery: '4週間', unit: '6,000', defaultNote: '' },
     ]
   },
   {
-    id: 'kyowa', label: '協和', colorClass: 'cat-kyowa',
+    id: 'kyowa', label: '仕入先C', colorClass: 'cat-kyowa',
     items: [
       { key: 'divider6',  name: '金色6個仕切り',  delivery: '3週間', unit: '', defaultNote: '2つ合わせて10,000' },
       { key: 'divider12', name: '金色12個仕切り', delivery: '3週間', unit: '', defaultNote: '2つ合わせて10,000' },
     ]
   },
   {
-    id: 'amushuti', label: 'アムシュティ', colorClass: 'cat-amushuti',
+    id: 'amushuti', label: '仕入先D', colorClass: 'cat-amushuti',
     items: [
       { key: 'tea', name: '紅茶', delivery: '2週間', unit: '3,000', defaultNote: '' },
     ]
   },
   {
-    id: 'gyomu', label: '業務スーパー', colorClass: 'cat-gyomu',
+    id: 'gyomu', label: '仕入先E', colorClass: 'cat-gyomu',
     items: [
       { key: 'aluminum_foil', name: '試食アルミホイル', delivery: '', unit: '', defaultNote: '' },
     ]
   },
   {
-    id: 'amazon', label: 'アマゾン', colorClass: 'cat-amazon',
+    id: 'amazon', label: '仕入先F', colorClass: 'cat-amazon',
     items: [
       { key: 'expiry_label', name: '賞味期限シール（ラベラー用）', delivery: '3日', unit: '', defaultNote: '' },
       { key: 'expiry_stamp', name: '賞味期限シール（スタンプ用）', delivery: '3日', unit: '', defaultNote: '' },
