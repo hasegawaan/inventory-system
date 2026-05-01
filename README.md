@@ -1,4 +1,4 @@
-# siro inventory
+# inventory
 
 A real-time inventory management web app built for a friend's workplace.
 
