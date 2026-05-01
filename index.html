@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>enmachi inventory</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <title>inventory</title>
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 
-  <!-- ヘッダー -->
   <header class="header">
     <div class="header-brand">
-      <h1 class="header-logo">siro</h1>
-      <span class="header-sub">enmachi inventory</span>
+      <h1 class="header-logo">inventory</h1>
     </div>
     <div class="header-actions">
       <span id="last-updated" class="last-updated"></span>
@@ -20,68 +18,86 @@
     </div>
   </header>
 
-  <!-- 低在庫バナー -->
-  <div id="low-stock-banner" class="low-stock-banner hidden">
-    在庫不足の商品があります
-  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" id="tab-chocolate" onclick="switchTab('chocolate')">商品ラインナップ</button>
+    <button class="tab-btn" id="tab-shizai" onclick="switchTab('shizai')">資材</button>
+  </nav>
 
-  <!-- メインコンテンツ -->
+  <div id="low-stock-banner" class="low-stock-banner hidden">在庫不足の商品があります</div>
+
   <main class="main">
 
-    <!-- siuzku -->
-    <section class="category">
-      <div class="category-header siuzku-color">
-        <div>
-          <span class="category-name">sizuku</span>
-          <span class="category-per-box">（1タッパー33個入り）</span>
+    <!-- 商品ラインナップ -->
+    <div id="section-chocolate">
+      <section class="category">
+        <div class="category-header siuzku-color">
+          <div>
+            <span class="category-name">sizuku</span>
+            <span class="category-per-box">（1タッパー33個入り）</span>
+          </div>
+          <span class="category-count" id="siuzku-count"></span>
         </div>
-        <span class="category-count" id="siuzku-count"></span>
-      </div>
-      <div class="item-grid" id="siuzku-grid"></div>
-    </section>
+        <div class="item-grid" id="siuzku-grid"></div>
+      </section>
+      <section class="category">
+        <div class="category-header mizumari-color">
+          <div>
+            <span class="category-name">mizumari</span>
+            <span class="category-per-box">（1タッパー25個入り）</span>
+          </div>
+          <span class="category-count" id="mizumari-count"></span>
+        </div>
+        <div class="item-grid" id="mizumari-grid"></div>
+      </section>
+      <section class="category">
+        <div class="category-header tumiki-color">
+          <div>
+            <span class="category-name">tumiki</span>
+            <span class="category-per-box">（1タッパー20個入り）</span>
+          </div>
+          <span class="category-count" id="tumiki-count"></span>
+        </div>
+        <div class="item-grid" id="tumiki-grid"></div>
+      </section>
+    </div>
 
-    <!-- mizumari -->
-    <section class="category">
-      <div class="category-header mizumari-color">
-        <div>
-          <span class="category-name">mizumari</span>
-          <span class="category-per-box">（1タッパー25個入り）</span>
-        </div>
-        <span class="category-count" id="mizumari-count"></span>
+    <!-- 資材 -->
+    <div id="section-shizai" class="hidden">
+      <div class="shizai-scroll">
+        <table class="shizai-table">
+          <colgroup>
+            <col class="col-cat">
+            <col class="col-name">
+            <col class="col-delivery">
+            <col class="col-unit">
+            <col class="col-qty">
+            <col class="col-note">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="th-cat">発注場所</th>
+              <th class="th-name">品名</th>
+              <th>納品期間</th>
+              <th>発注単位</th>
+              <th>在庫数</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody id="shizai-tbody"></tbody>
+        </table>
       </div>
-      <div class="item-grid" id="mizumari-grid"></div>
-    </section>
-
-    <!-- tumiki -->
-    <section class="category">
-      <div class="category-header tumiki-color">
-        <div>
-          <span class="category-name">tumiki</span>
-          <span class="category-per-box">（1タッパー20個入り）</span>
-        </div>
-        <span class="category-count" id="tumiki-count"></span>
-      </div>
-      <div class="item-grid" id="tumiki-grid"></div>
-    </section>
+    </div>
 
   </main>
 
-  <!-- 編集モード終了ボタン（フローティング） -->
-  <button id="exit-edit-btn" class="btn-exit-edit hidden" onclick="exitEditMode()">
-    編集完了
-  </button>
+  <button id="exit-edit-btn" class="btn-exit-edit hidden" onclick="exitEditMode()">編集完了</button>
 
   <!-- パスワードモーダル -->
   <div id="password-modal" class="modal hidden">
     <div class="modal-box">
-      <div class="modal-title">パスワードを入力</div>
-      <input
-        id="password-input"
-        class="modal-input"
-        type="password"
-        placeholder="····"
-        onkeydown="if(event.key==='Enter') confirmPassword()"
-      >
+      <div class="modal-title" id="pw-modal-title">パスワードを入力</div>
+      <input id="password-input" class="modal-input" type="password" placeholder="····"
+        onkeydown="if(event.key==='Enter') confirmPassword()">
       <div id="password-error" class="modal-error hidden">パスワードが違います</div>
       <div class="modal-actions">
         <button class="btn-modal-cancel" onclick="closePasswordModal()">キャンセル</button>
@@ -90,7 +106,19 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- 数量モーダル -->
+  <div id="qty-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-title">数量を設定</div>
+      <input id="qty-modal-input" class="modal-input" type="number" inputmode="numeric" min="0"
+        onkeydown="if(event.key==='Enter') confirmQty()">
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="closeQtyModal()">キャンセル</button>
+        <button class="btn-modal-confirm" onclick="confirmQty()">確認</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <script src="firebase-config.js"></script>
