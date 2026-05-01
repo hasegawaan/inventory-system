@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>enmachi inventory</title>
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-brand">
+      <h1 class="header-logo">siro</h1>
+      <span class="header-sub">enmachi inventory</span>
+    </div>
+    <div class="header-actions">
+      <span id="last-updated" class="last-updated"></span>
+      <button id="edit-btn" class="btn-edit" onclick="toggleEditMode()">編集</button>
+    </div>
+  </header>
+
+  <!-- 低在庫バナー -->
+  <div id="low-stock-banner" class="low-stock-banner hidden">
+    在庫不足の商品があります
+  </div>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+
+    <!-- siuzku -->
+    <section class="category">
+      <div class="category-header siuzku-color">
+        <div>
+          <span class="category-name">sizuku</span>
+          <span class="category-per-box">（1タッパー33個入り）</span>
+        </div>
+        <span class="category-count" id="siuzku-count"></span>
+      </div>
+      <div class="item-grid" id="siuzku-grid"></div>
+    </section>
+
+    <!-- mizumari -->
+    <section class="category">
+      <div class="category-header mizumari-color">
+        <div>
+          <span class="category-name">mizumari</span>
+          <span class="category-per-box">（1タッパー25個入り）</span>
+        </div>
+        <span class="category-count" id="mizumari-count"></span>
+      </div>
+      <div class="item-grid" id="mizumari-grid"></div>
+    </section>
+
+    <!-- tumiki -->
+    <section class="category">
+      <div class="category-header tumiki-color">
+        <div>
+          <span class="category-name">tumiki</span>
+          <span class="category-per-box">（1タッパー20個入り）</span>
+        </div>
+        <span class="category-count" id="tumiki-count"></span>
+      </div>
+      <div class="item-grid" id="tumiki-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- 編集モード終了ボタン（フローティング） -->
+  <button id="exit-edit-btn" class="btn-exit-edit hidden" onclick="exitEditMode()">
+    編集完了
+  </button>
+
+  <!-- パスワードモーダル -->
+  <div id="password-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-title">パスワードを入力</div>
+      <input
+        id="password-input"
+        class="modal-input"
+        type="password"
+        placeholder="····"
+        onkeydown="if(event.key==='Enter') confirmPassword()"
+      >
+      <div id="password-error" class="modal-error hidden">パスワードが違います</div>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="closePasswordModal()">キャンセル</button>
+        <button class="btn-modal-confirm" onclick="confirmPassword()">確認</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
