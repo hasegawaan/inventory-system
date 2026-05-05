@@ -84,7 +84,7 @@ let db = null
 firebase.initializeApp(FIREBASE_CONFIG)
 db = firebase.database()
 
-db.ref('inventory').on('value', snapshot => {
+db.ref('demo_inventory').on('value', snapshot => {
   const data = snapshot.val()
   if (data) {
     inventory = data
@@ -92,13 +92,13 @@ db.ref('inventory').on('value', snapshot => {
     CATEGORIES.forEach(cat => {
       cat.items.forEach(item => { inventory[`${cat.id}_${item}`] = 10 })
     })
-    db.ref('inventory').set(inventory)
+    db.ref('demo_inventory').set(inventory)
   }
   renderChocolate()
   updateLastUpdated()
 })
 
-db.ref('shizai_inventory').on('value', snapshot => {
+db.ref('demo_shizai_inventory').on('value', snapshot => {
   const data = snapshot.val() || {}
   SHIZAI_CATEGORIES.forEach(cat => {
     cat.items.forEach(item => {
@@ -109,7 +109,7 @@ db.ref('shizai_inventory').on('value', snapshot => {
   if (currentTab === 'shizai') renderShizai()
 })
 
-db.ref('shizai_notes').on('value', snapshot => {
+db.ref('demo_shizai_notes').on('value', snapshot => {
   shizaiNotes = snapshot.val() || {}
   if (currentTab === 'shizai' && !editMode) renderShizai()
 })
@@ -194,7 +194,7 @@ function renderShizai() {
         const key = td.dataset.key
         const text = td.textContent.trim()
         shizaiNotes[key] = text
-        db.ref(`shizai_notes/${key}`).set(text || null)
+        db.ref(`demo_shizai_notes/${key}`).set(text || null)
       })
     })
   }
@@ -204,14 +204,14 @@ function renderShizai() {
 function changeQty(key, delta) {
   const next = Math.max(0, (inventory[key] ?? 0) + delta)
   inventory[key] = next
-  db.ref(`inventory/${key}`).set(next)
+  db.ref(`demo_inventory/${key}`).set(next)
   renderChocolate()
 }
 
 function changeShizaiQty(key, delta) {
   const next = Math.max(0, (shizaiInventory[key] ?? 0) + delta)
   shizaiInventory[key] = next
-  db.ref(`shizai_inventory/${key}`).set(next)
+  db.ref(`demo_shizai_inventory/${key}`).set(next)
   renderShizai()
 }
 
@@ -238,11 +238,11 @@ function confirmQty() {
   const val = Math.max(0, parseInt(document.getElementById('qty-modal-input').value) || 0)
   if (pendingQtyIsShizai) {
     shizaiInventory[pendingQtyKey] = val
-    db.ref(`shizai_inventory/${pendingQtyKey}`).set(val)
+    db.ref(`demo_shizai_inventory/${pendingQtyKey}`).set(val)
     renderShizai()
   } else {
     inventory[pendingQtyKey] = val
-    db.ref(`inventory/${pendingQtyKey}`).set(val)
+    db.ref(`demo_inventory/${pendingQtyKey}`).set(val)
     renderChocolate()
   }
   closeQtyModal()
